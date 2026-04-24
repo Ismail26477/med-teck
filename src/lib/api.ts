@@ -2,23 +2,21 @@ import { sessionManager } from './session';
 
 // Determine API base URL - handles both local and production environments
 const getApiBaseUrl = () => {
-  const envUrl = import.meta.env.VITE_API_URL;
+  // Check if running on localhost/127.0.0.1
+  const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
+  const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
   
-  // If VITE_API_URL is set, use it (production)
-  if (envUrl && envUrl.trim() !== '') {
-    return `${envUrl}/api`;
+  // If on localhost, use the backend server
+  if (isLocalhost) {
+    return 'http://localhost:3001/api';
   }
   
-  // For production (Vercel), use relative paths
-  if (import.meta.env.PROD) {
-    return '/api';
-  }
-  
-  // For development, use localhost
-  return 'http://localhost:3001/api';
+  // Otherwise, use relative paths (works on Vercel and other hosts)
+  return '/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();
+console.log('[v0] API Base URL:', API_BASE_URL);
 
 export interface ApiResponse<T> {
   success: boolean;
