@@ -1,0 +1,20 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "vite",
+  "outputDirectory": "dist",
+  "env": {
+    "MONGODB_URI": "@mongodb_uri",
+    "MONGODB_DB": "medisync",
+    "NODE_ENV": "production",
+    "PORT": "3001",
+    "VITE_API_URL": ""
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ]
+}
